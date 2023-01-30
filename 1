@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do List</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h1>To-Do List</h1>
+  <form action="" method="post">
+    <input type="text" name="task">
+    <input type="submit" name="add" value="Add Task">
+  </form>
+  <table>
+    <tr>
+      <th>Task</th>
+      <th>Action</th>
+    </tr>
+    <?php
+      $tasks = [];
+      if (isset($_POST['add'])) {
+        $task = $_POST['task'];
+        array_push($tasks, $task);
+      }
+      if (isset($_POST['delete'])) {
+        $index = $_POST['index'];
+        unset($tasks[$index]);
+        $tasks = array_values($tasks);
+      }
+      foreach ($tasks as $index => $task) {
+        echo '<tr>';
+        echo '<td>'.$task.'</td>';
+        echo '<td>';
+        echo '<form action="" method="post">';
+        echo '<input type="hidden" name="index" value="'.$index.'">';
+        echo '<input type="submit" name="delete" value="Delete">';
+        echo '</form>';
+        echo '</td>';
+        echo '</tr>';
+      }
+    ?>
+  </table>
+</body>
+</html>
